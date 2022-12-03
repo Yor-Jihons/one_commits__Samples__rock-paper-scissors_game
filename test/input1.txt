@@ -1,0 +1,8 @@
+7
+R P
+R S
+S S
+P S
+S P
+P R
+P P
