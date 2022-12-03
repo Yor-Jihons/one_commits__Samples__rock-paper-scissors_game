@@ -9,9 +9,11 @@ user_handとcomputer_handはそれぞれ{ R, P, S }のいずれかの一文字�
 
 ## 2. Conditions
 
+```
 1≦N≦10
 user_hand{i} = { 'R' | 'P' | 'S' }
 computer_hand{i} = { 'R' | 'P' | 'S' }
+```
 
 ## 3. Inputs and Outputs
 
