@@ -137,9 +137,9 @@ int main( int argc, char** argv ){
     for( int i = 0; i < n; i++ ){
         char user_hand, computer_hand;
         cin >> user_hand >> computer_hand;
-
-        // Original::Hand(user_hand), Original::Hand(computer_hand)
-        std::unique_ptr<Original::RockPaperScissors> rps(new Original::RockPaperScissors( Original::Hand(user_hand), Original::Hand(computer_hand) ));
+        std::unique_ptr<Original::RockPaperScissors> rps(new Original::RockPaperScissors(
+            Original::Hand(user_hand), Original::Hand(computer_hand)
+        ));
         counter.Count( rps->CalcResult() );
     }
 
