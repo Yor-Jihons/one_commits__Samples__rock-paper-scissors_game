@@ -117,7 +117,7 @@ namespace Original{
             }
 
             void Print( void ){
-                cout << "Win : " << win_ << endl;
+                cout << "Win : " << win_  << endl;
                 cout << "Lose: " << lose_ << endl;
                 cout << "Draw: " << draw_ << endl;
             }
