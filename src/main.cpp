@@ -129,20 +129,73 @@ namespace Original{
 }
 
 
-int main( int argc, char** argv ){
-    int n;
-    cin >> n;
+namespace Original{
+    class FormatException : public std::exception{
+        public:
+            FormatException(){}
+            ~FormatException() = default;
 
-    Original::Counter counter;
-    for( int i = 0; i < n; i++ ){
-        char user_hand, computer_hand;
-        cin >> user_hand >> computer_hand;
-        std::unique_ptr<Original::RockPaperScissors> rps(new Original::RockPaperScissors(
-            Original::Hand(user_hand), Original::Hand(computer_hand)
-        ));
-        counter.Count( rps->CalcResult() );
+            const char* what( void ) const noexcept{
+                return "This data is wrong.";
+            }
+    };
+
+    class OutOfBoundException : public std::exception{
+        public:
+            OutOfBoundException(){}
+            ~OutOfBoundException() = default;
+
+            const char* what( void ) const noexcept{
+                return "This data is out of bound.";
+            }
+    };
+}
+
+
+namespace Original{
+    bool IsDigitString( const std::string& str ){
+        for( int i = 0; i < static_cast<int>(str.size()); i++ ){
+            if( std::isdigit( str[i] ) == 0 ) return false;
+        }
+    return true;
+    }
+    int ConvertStringToInt( const std::string& str ){
+        if( !IsDigitString( str ) ) throw FormatException();
+        int n = std::atoi( str.c_str() );
+    return n;
     }
 
-    counter.Print();
+    bool IsValidNumber4N( int n ){
+        if( n >= 1 && n <= 30 ) return true;
+    return false;
+    }
+
+    bool IsValidNumber4Hand( char c ){
+        if( c == 'R' || c == 'P' || c == 'S' ) return true;
+    return false;
+    }
+}
+
+int main( int argc, char** argv ){
+    try{
+        int n;
+        cin >> n;
+        if( !Original::IsValidNumber4N( n ) ) throw Original::OutOfBoundException();
+
+        Original::Counter counter;
+        for( int i = 0; i < n; i++ ){
+            char user_hand, computer_hand;
+            cin >> user_hand >> computer_hand;
+            if( !Original::IsValidNumber4Hand( user_hand ) || !Original::IsValidNumber4Hand( computer_hand ) ) throw Original::OutOfBoundException();
+            std::unique_ptr<Original::RockPaperScissors> rps(new Original::RockPaperScissors(
+                Original::Hand(user_hand), Original::Hand(computer_hand)
+            ));
+            counter.Count( rps->CalcResult() );
+        }
+
+        counter.Print();
+    }catch( std::exception& e ){
+        cout << e.what() << endl;
+    }
 return 0;
 }
